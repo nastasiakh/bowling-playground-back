@@ -1,22 +1,29 @@
-import {createOne, getAll} from "./user.repository";
-import express from "express";
+import * as express from "express";
+import {UsersRepository} from "./user.repository";
+import {Router} from "express";
 
+export class UsersController {
+  private users: UsersRepository;
 
-const router = express.Router();
+  constructor(users: UsersRepository) {
+    this.users = users;
+  }
 
-router.get("/users", (req, res) => {
-  return getAll().then((reference) => {
-    reference.map((user) => {
-      res.send(user);
+  build(): Router {
+    const router = express.Router();
+    router.get("/", async (req, res) => {
+      const all = await this.users.getAll();
+      res.send(all);
     });
-  });
-});
 
-router.post("/signup/info", (req) => {
-  return createOne(req.body);
-});
+    router.post("/", async (req, res) => {
+      const id = await this.users.create(req.body);
+      res.send({...req.body, id});
+    });
+    return router;
+  }
+}
 
-export default router;
 //   async create(@Body() user: SignUpCredentials): Promise<string> {
 //     const uid = await this.userService.create({
 //       email: user.email,

@@ -1,20 +1,13 @@
-import express, {Request, Response} from "express";
-import functions from "firebase-functions";
-import router from "./users/users";
+import * as express from "express";
+import {UsersController} from "./users/users";
+import {UsersRepository} from "./users/user.repository";
+import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-admin.initializeApp();
+admin.initializeApp({credential: admin.credential.applicationDefault()});
+
 const app: express.Express = express();
-// const port = 3000;
 
-app.use("/signup/info", router);
+app.use("/users", new UsersController(new UsersRepository(admin.firestore())).build());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("The app is running.");
-});
-
-exports.widgets = functions.https.onRequest(app);
-
-// app.listen(port, () => {
-//   console.log(`Server is running at http://localhost:${port}`);
-// });
+exports.api = functions.https.onRequest(app);

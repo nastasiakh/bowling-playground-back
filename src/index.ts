@@ -8,6 +8,10 @@ admin.initializeApp({credential: admin.credential.applicationDefault()});
 
 const app: express.Express = express();
 
+app.get('/', (req,res) => {
+  res.send('welcome');
+})
+
 app.use('/signup/info', new UsersController(
     new UsersRepository(admin.firestore())).build());
 

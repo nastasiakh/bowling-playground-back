@@ -17,8 +17,9 @@ export class UsersController {
     });
 
     router.post('/', async (req, res) => {
-      const id = await this.users.create(req.body);
-      res.send({...req.body, id});
+      // const id = await this.users.create(req.body);
+      res.send('Hello world')
+      // res.send({...req.body, id});
     });
     return router;
   }

@@ -1,4 +1,4 @@
-import {ProfileInfo} from './user.dto';
+import {NewUserCreating, ProfileInfo} from './user.dto';
 import {firestore} from 'firebase-admin';
 import Firestore = firestore.Firestore;
 
@@ -22,13 +22,14 @@ export class UsersRepository {
     });
   }
 
-  async create(user: ProfileInfo): Promise<string> {
-    const reference = await this.fs.collection('users').add({
+  async create(user: NewUserCreating): Promise<string> {
+    await this.fs.collection('users').add({
+      id: user.id,
       email: user.email,
       name: user.name,
       gender: user.gender,
       birthday: user.birthday,
     });
-    return reference.id;
+    return 'Result';
   }
 }

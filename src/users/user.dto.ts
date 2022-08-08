@@ -16,3 +16,11 @@ export interface ProfileInfoRequest {
   name?: string;
   image?: string;
 }
+export interface NewUserCreating{
+  id?: string,
+  email?: string,
+  gender?: string,
+  birthday?: string,
+  name?: string,
+  image?: string
+}

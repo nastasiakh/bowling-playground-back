@@ -12,6 +12,10 @@ jobs:
         uses: actions/checkout@master
       - name: Install Dependencies
         run: npm install
+      - name : Inject Version
+        run: |
+          echo "GITHUB_RUN_ID=$GITHUB_RUN_ID" >> .env
+          echo "GITHUB_SHA=$GITHUB_SHA" >> .env
       - name: Build
         run: npm run build
       - name: Deploy to Firebase

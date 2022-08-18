@@ -19,7 +19,7 @@ app.use((req,res, next) => {
 app.use('/signup/info', new UsersController(
     new UsersRepository(admin.firestore())).build());
 
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send({version: `1.0.${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_SHA}`});
 });
 

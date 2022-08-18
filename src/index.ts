@@ -15,4 +15,9 @@ app.use('/', (req, res) =>{
 app.use('/signup/info', new UsersController(
     new UsersRepository(admin.firestore())).build());
 
+app.use((req,res, next) => {
+  res.set('Access-Control-Allow-Origin', 'https://first-back-end-21211.web.app');
+  next();
+});
+
 exports.api = functions.https.onRequest(app);

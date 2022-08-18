@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - merge-1
 jobs:
   build-deploy-firebase:
     name: Build And Deploy Web Application
